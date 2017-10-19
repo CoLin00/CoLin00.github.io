@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>小站一会</title>
+    <link>http://yoursite.com/</link>
+    <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>记录生活和自己。</description>
+    <pubDate>Thu, 19 Oct 2017 11:09:17 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>终于弄好了～</title>
+      <link>http://yoursite.com/2017/10/19/hello-world/</link>
+      <guid>http://yoursite.com/2017/10/19/hello-world/</guid>
+      <pubDate>Thu, 19 Oct 2017 06:05:21 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;花了一点时间弄这个，可以建一个自己的博客也是很好了。&lt;/p&gt;
+
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>花了一点时间弄这个，可以建一个自己的博客也是很好了。</p>]]></content:encoded>
+      
+      <comments>http://yoursite.com/2017/10/19/hello-world/#disqus_thread</comments>
+    </item>
+    
+  </channel>
+</rss>
