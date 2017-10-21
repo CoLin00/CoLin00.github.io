@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
+<meta name="description" content="这篇总结一下初次使用 python 抓取推文的学习心得吧，其实也就是跑了下书中的代码。技术流程就是前文展示的那种，那么这里就按照这个流程来一遍吧。（本部分涉及到书中的 Chap2-3 ） 验证登入 Twitter App 获取 key1、进入网站2、新建应用3、获取以下 key 值consumer key， consumer secret， access token， access secret">
 <meta name="keywords" content="技术,python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【笔记】Mastering social media mining with Python (2)">
-<meta property="og:url" content="http://yoursite.com/2017/10/20/2017-10-20-1/index.html">
+<meta property="og:title" content="如何利用 Python 抓取 Twitter 的内容">
+<meta property="og:url" content="http://colin00.github.io/2017/10/20/2017-10-20-1/index.html">
 <meta property="og:site_name" content="小站一会">
-<meta property="og:description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
+<meta property="og:description" content="这篇总结一下初次使用 python 抓取推文的学习心得吧，其实也就是跑了下书中的代码。技术流程就是前文展示的那种，那么这里就按照这个流程来一遍吧。（本部分涉及到书中的 Chap2-3 ） 验证登入 Twitter App 获取 key1、进入网站2、新建应用3、获取以下 key 值consumer key， consumer secret， access token， access secret">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-21T10:27:35.094Z">
+<meta property="og:updated_time" content="2017-10-21T14:57:10.273Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【笔记】Mastering social media mining with Python (2)">
-<meta name="twitter:description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
+<meta name="twitter:title" content="如何利用 Python 抓取 Twitter 的内容">
+<meta name="twitter:description" content="这篇总结一下初次使用 python 抓取推文的学习心得吧，其实也就是跑了下书中的代码。技术流程就是前文展示的那种，那么这里就按照这个流程来一遍吧。（本部分涉及到书中的 Chap2-3 ） 验证登入 Twitter App 获取 key1、进入网站2、新建应用3、获取以下 key 值consumer key， consumer secret， access token， access secret">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/20/2017-10-20-1/"/>
+  <link rel="canonical" href="http://colin00.github.io/2017/10/20/2017-10-20-1/"/>
 
 
 
 
 
-  <title>【笔记】Mastering social media mining with Python (2) | 小站一会</title>
+  <title>如何利用 Python 抓取 Twitter 的内容 | 小站一会</title>
   
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/2017-10-20-1/">
+    <link itemprop="mainEntityOfPage" href="http://colin00.github.io/2017/10/20/2017-10-20-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoLin">
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【笔记】Mastering social media mining with Python (2)</h1>
+          <h1 class="post-title" itemprop="name headline">如何利用 Python 抓取 Twitter 的内容</h1>
         
 
         <div class="post-meta">
@@ -378,7 +378,7 @@
 
           
           
-             <span id="/2017/10/20/2017-10-20-1/" class="leancloud_visitors" data-flag-title="【笔记】Mastering social media mining with Python (2)">
+             <span id="/2017/10/20/2017-10-20-1/" class="leancloud_visitors" data-flag-title="如何利用 Python 抓取 Twitter 的内容">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  192
+                  489
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -440,7 +440,10 @@
       
 
       
-        <h1 id="爬取推特"><a href="#爬取推特" class="headerlink" title="爬取推特"></a>爬取推特</h1><h2 id="1、第一步：获取许可并登入"><a href="#1、第一步：获取许可并登入" class="headerlink" title="1、第一步：获取许可并登入"></a>1、第一步：获取许可并登入</h2><p>包含两部分：<br><code>get_twitter_auth()</code>  获得许可证<br><code>get_twitter_client()</code> 登入服务器</p>
+        <p>这篇总结一下初次使用 python 抓取推文的学习心得吧，其实也就是跑了下书中的代码。技术流程就是前文展示的那种，那么这里就按照这个流程来一遍吧。<br>（本部分涉及到书中的 Chap2-3 ）</p>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><h2 id="登入-Twitter-App-获取-key"><a href="#登入-Twitter-App-获取-key" class="headerlink" title="登入 Twitter App 获取 key"></a>登入 Twitter App 获取 key</h2><p>1、进入网站<br>2、新建应用<br>3、获取以下 key 值<br><code>consumer key</code>， <code>consumer secret</code>， <code>access token</code>， <code>access secret</code></p>
+<h2 id="运行通用型认证代码"><a href="#运行通用型认证代码" class="headerlink" title="运行通用型认证代码"></a>运行通用型认证代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用于获得推特的准入许可（第一步）</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">from</span> tweepy <span class="keyword">import</span> API</div><div class="line"><span class="keyword">from</span> tweepy <span class="keyword">import</span> OAuthHandler</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_twitter_auth</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""启动 Twitter 验证</span></div><div class="line"><span class="string">    返回: tweepy.OAuthHandler 对象</span></div><div class="line"><span class="string">    """</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="comment"># 下面的代码不知道如何解决，设置了环境变量，但是依然有错误，所以采用直接形式</span></div><div class="line">        <span class="comment">#consumer_key = os.environ['TWITTER_CONSUMER_KEY']</span></div><div class="line">        <span class="comment">#consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']</span></div><div class="line">        <span class="comment">#access_token = os.environ['TWITTER_ACCESS_TOKEN']</span></div><div class="line">        <span class="comment">#access_secret = os.environ['TWITTER_ACCESS_SECRET']</span></div><div class="line">        consumer_key = <span class="string">'自己填'</span></div><div class="line">        consumer_secret = <span class="string">'自己填'</span></div><div class="line">        access_token = <span class="string">'自己填'</span></div><div class="line">        access_secret = <span class="string">'自己填'</span></div><div class="line">    <span class="keyword">except</span> KeyError:</div><div class="line">        sys.stderr.write(<span class="string">"TWITTER_* environment variables not set\n"</span>)</div><div class="line">        sys.exit(<span class="number">1</span>)</div><div class="line">    auth = OAuthHandler(consumer_key, consumer_secret)</div><div class="line">    auth.set_access_token(access_token, access_secret)</div><div class="line">    <span class="keyword">return</span> auth</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_twitter_client</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""启动 Twitter API 客户端</span></div><div class="line"><span class="string">    返回: tweepy.API 对象</span></div><div class="line"><span class="string">    """</span></div><div class="line">    auth = get_twitter_auth()</div><div class="line">    <span class="comment"># 这里要注意设置代理的网址</span></div><div class="line">    client = API(auth,proxy=<span class="string">"自己填"</span>)</div><div class="line">    <span class="keyword">return</span> client</div></pre></td></tr></table></figure>
+<h1 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h1><h1 id="数据清理和预处理"><a href="#数据清理和预处理" class="headerlink" title="数据清理和预处理"></a>数据清理和预处理</h1><h1 id="建模和分析"><a href="#建模和分析" class="headerlink" title="建模和分析"></a>建模和分析</h1><h1 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h1><h2 id="1、第一步：获取许可并登入"><a href="#1、第一步：获取许可并登入" class="headerlink" title="1、第一步：获取许可并登入"></a>1、第一步：获取许可并登入</h2><p>包含两部分：<br><code>get_twitter_auth()</code>  获得许可证<br><code>get_twitter_client()</code> 登入服务器</p>
 <p>小实验：获取自己主页时间线的前十条<br>tweepy.Cursor<br>tweepy.Status</p>
 <p>小实验2: 获取主页200条并存入 json<br>自己主页最多 800条；<br>别人主页最多 3200条；<br><a id="more"></a> </p>
 <h2 id="tweet-的数据结构"><a href="#tweet-的数据结构" class="headerlink" title="tweet 的数据结构"></a>tweet 的数据结构</h2><h2 id="streaming-API"><a href="#streaming-API" class="headerlink" title="streaming API"></a>streaming API</h2><p>CustomListener class<br>    StreamListener<br>    on_data() on_error()<br>#19thCPC #19thPartyCongress</p>
@@ -469,7 +472,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2017/10/20/2017-10-20-1/" title="【笔记】Mastering social media mining with Python (2)">http://yoursite.com/2017/10/20/2017-10-20-1/</a>
+    <a href="http://colin00.github.io/2017/10/20/2017-10-20-1/" title="如何利用 Python 抓取 Twitter 的内容">http://colin00.github.io/2017/10/20/2017-10-20-1/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -484,9 +487,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技术/" rel="tag"># 技术</a>
+            <a href="/tags/技术/" rel="tag"> <i class="fa fa-tag"></i> 技术</a>
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/python/" rel="tag"> <i class="fa fa-tag"></i> python</a>
           
         </div>
       
@@ -672,7 +675,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬取推特"><span class="nav-number">1.</span> <span class="nav-text">爬取推特</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、第一步：获取许可并登入"><span class="nav-number">1.1.</span> <span class="nav-text">1、第一步：获取许可并登入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tweet-的数据结构"><span class="nav-number">1.2.</span> <span class="nav-text">tweet 的数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#streaming-API"><span class="nav-number">1.3.</span> <span class="nav-text">streaming API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">1.4.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本分析"><span class="nav-number">1.5.</span> <span class="nav-text">文本分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间序列分析"><span class="nav-number">1.6.</span> <span class="nav-text">时间序列分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#粉丝状况"><span class="nav-number">1.7.</span> <span class="nav-text">粉丝状况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量影响力"><span class="nav-number">1.8.</span> <span class="nav-text">测量影响力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论关系"><span class="nav-number">1.9.</span> <span class="nav-text">评论关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地图绘制"><span class="nav-number">1.10.</span> <span class="nav-text">地图绘制</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#验证"><span class="nav-number">1.</span> <span class="nav-text">验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登入-Twitter-App-获取-key"><span class="nav-number">1.1.</span> <span class="nav-text">登入 Twitter App 获取 key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行通用型认证代码"><span class="nav-number">1.2.</span> <span class="nav-text">运行通用型认证代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据收集"><span class="nav-number">2.</span> <span class="nav-text">数据收集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据清理和预处理"><span class="nav-number">3.</span> <span class="nav-text">数据清理和预处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建模和分析"><span class="nav-number">4.</span> <span class="nav-text">建模和分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结果展示"><span class="nav-number">5.</span> <span class="nav-text">结果展示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、第一步：获取许可并登入"><span class="nav-number">5.1.</span> <span class="nav-text">1、第一步：获取许可并登入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tweet-的数据结构"><span class="nav-number">5.2.</span> <span class="nav-text">tweet 的数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#streaming-API"><span class="nav-number">5.3.</span> <span class="nav-text">streaming API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">5.4.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本分析"><span class="nav-number">5.5.</span> <span class="nav-text">文本分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间序列分析"><span class="nav-number">5.6.</span> <span class="nav-text">时间序列分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#粉丝状况"><span class="nav-number">5.7.</span> <span class="nav-text">粉丝状况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量影响力"><span class="nav-number">5.8.</span> <span class="nav-text">测量影响力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论关系"><span class="nav-number">5.9.</span> <span class="nav-text">评论关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地图绘制"><span class="nav-number">5.10.</span> <span class="nav-text">地图绘制</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -706,7 +709,7 @@
 </div>
 <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  :<span id="busuanzi_value_site_uv"></span>
+ :<span id="busuanzi_value_site_uv"></span>
 </span>
 </div>
 
