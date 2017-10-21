@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[【笔记】Mastering social media mining with Python (2)]]></title>
+    <url>%2F2017%2F10%2F20%2F2017-10-20-1%2F</url>
+    <content type="text"><![CDATA[爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth() 获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条； tweet 的数据结构streaming APICustomListener class StreamListener on_data() on_error()#19thCPC #19thPartyCongress 数据分析标签频率；推文标签分布；提及人频率； 文本分析Tokenization 分词stop word removal 停顿词 时间序列分析粉丝状况 在量很大的情况下，选择 set 或者 numpy 来计算； 测量影响力Term Frequency (TF)Inverse Document Frequency (IDF)TF-IDF statistics 评论关系未完全检测到，可能跟数据有关 地图绘制]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[怎么理解 Python 爬虫]]></title>
+    <url>%2F2017%2F10%2F20%2F2017-10-20%2F</url>
+    <content type="text"><![CDATA[由于自己的研究需要爬取 Twitter 和 Facebook 的社交数据，但自己又没有真正爬取过，所以需要好好学习一下， Social media - challenges and opportunities【这一章其实都是理论，主要介绍抓取的技术，简单看一遍就可以进入第二章了】 对社交媒体的理解Internet-based applicationsUser-generated contentNetworking 本书要解决的问题how to extract useful knowledge from the data coming from the social media? knowledge hierarchy 社交媒体挖掘的机遇Application Programming Interface (API)Representational State Transfer (REST)RESTful API 社交媒体挖掘的挑战big datastructured dataunstructured data semi-structured data data integrity data access research and development (R&amp;D) processes 社交媒体挖掘的技术流程1、验证 Authentication2、数据收集 Data collection3、数据清理和预处理 Data cleaning and pre-processing4、建模和分析 Modeling and analysis5、结果展示 Result presentation Open Authorization (OAuth)a user, consumer (our application), and resource provider (the social media platform). Text miningGraph mining Python tools for data sciencePython 的优点Declarative and intuitive syntaxRich ecosystem for data processingEfficiency Python 版本3.4+ and 3.5+pip and virtualenvvirtualenv 管理虚拟环境和安装依赖环境Conda, Anaconda, and Miniconda 数据分析工具NumPy and pandasNaming conventionsnumpy as np; pandas as pd; 机器学习Supervised learningNaive Bayes (NB)Support Vector Machine (SVM)Neural Networks (NN)training datatest dataUnsupervised learning]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[终于弄好了～]]></title>
+    <url>%2F2017%2F10%2F19%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[花了一点时间弄这个，可以建一个自己的博客也是很好了。]]></content>
+      <categories>
+        <category>生活日志</category>
+      </categories>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+</search>

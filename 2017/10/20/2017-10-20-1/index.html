@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术,python," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="记录生活和自己。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
+<meta name="keywords" content="技术,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【笔记】Mastering social media mining with Python (2)">
+<meta property="og:url" content="http://yoursite.com/2017/10/20/2017-10-20-1/index.html">
 <meta property="og:site_name" content="小站一会">
-<meta property="og:description" content="记录生活和自己。">
+<meta property="og:description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-19T09:59:14.945Z">
+<meta property="og:updated_time" content="2017-10-21T10:27:35.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
-<meta name="twitter:description" content="记录生活和自己。">
+<meta name="twitter:title" content="【笔记】Mastering social media mining with Python (2)">
+<meta name="twitter:description" content="爬取推特1、第一步：获取许可并登入包含两部分：get_twitter_auth()  获得许可证get_twitter_client() 登入服务器 小实验：获取自己主页时间线的前十条tweepy.Cursortweepy.Status 小实验2: 获取主页200条并存入 json自己主页最多 800条；别人主页最多 3200条；">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/20/2017-10-20-1/"/>
 
 
 
 
 
-  <title>标签 | 小站一会</title>
+  <title>【笔记】Mastering social media mining with Python (2) | 小站一会</title>
   
 
 
@@ -296,40 +297,242 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/2017-10-20-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoLin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小站一会">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 3 个标签
+          <h1 class="post-title" itemprop="name headline">【笔记】Mastering social media mining with Python (2)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-20T15:05:35+08:00">
+                2017-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/20/2017-10-20-1/" class="leancloud_visitors" data-flag-title="【笔记】Mastering social media mining with Python (2)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  192
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
             </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/python/" style="font-size: 30px; color: #111">python</a> <a href="/tags/技术/" style="font-size: 30px; color: #111">技术</a> <a href="/tags/生活/" style="font-size: 12px; color: #ccc">生活</a>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="爬取推特"><a href="#爬取推特" class="headerlink" title="爬取推特"></a>爬取推特</h1><h2 id="1、第一步：获取许可并登入"><a href="#1、第一步：获取许可并登入" class="headerlink" title="1、第一步：获取许可并登入"></a>1、第一步：获取许可并登入</h2><p>包含两部分：<br><code>get_twitter_auth()</code>  获得许可证<br><code>get_twitter_client()</code> 登入服务器</p>
+<p>小实验：获取自己主页时间线的前十条<br>tweepy.Cursor<br>tweepy.Status</p>
+<p>小实验2: 获取主页200条并存入 json<br>自己主页最多 800条；<br>别人主页最多 3200条；<br><a id="more"></a> </p>
+<h2 id="tweet-的数据结构"><a href="#tweet-的数据结构" class="headerlink" title="tweet 的数据结构"></a>tweet 的数据结构</h2><h2 id="streaming-API"><a href="#streaming-API" class="headerlink" title="streaming API"></a>streaming API</h2><p>CustomListener class<br>    StreamListener<br>    on_data() on_error()<br>#19thCPC #19thPartyCongress</p>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>标签频率；<br>推文标签分布；<br>提及人频率；</p>
+<h2 id="文本分析"><a href="#文本分析" class="headerlink" title="文本分析"></a>文本分析</h2><p><strong>Tokenization</strong> 分词<br><strong>stop word removal</strong> 停顿词</p>
+<h2 id="时间序列分析"><a href="#时间序列分析" class="headerlink" title="时间序列分析"></a>时间序列分析</h2><h2 id="粉丝状况"><a href="#粉丝状况" class="headerlink" title="粉丝状况"></a>粉丝状况</h2><p> 在量很大的情况下，选择 set 或者 numpy 来计算；</p>
+<h2 id="测量影响力"><a href="#测量影响力" class="headerlink" title="测量影响力"></a>测量影响力</h2><p><strong>Term Frequency (TF)</strong><br><strong>Inverse Document Frequency (IDF)</strong><br><strong>TF-IDF statistics</strong></p>
+<h2 id="评论关系"><a href="#评论关系" class="headerlink" title="评论关系"></a>评论关系</h2><p>未完全检测到，可能跟数据有关</p>
+<h2 id="地图绘制"><a href="#地图绘制" class="headerlink" title="地图绘制"></a>地图绘制</h2>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    CoLin
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2017/10/20/2017-10-20-1/" title="【笔记】Mastering social media mining with Python (2)">http://yoursite.com/2017/10/20/2017-10-20-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/20/2017-10-20/" rel="next" title="怎么理解 Python 爬虫">
+                <i class="fa fa-chevron-left"></i> 怎么理解 Python 爬虫
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
   </div>
 
 
@@ -338,6 +541,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -358,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -446,6 +662,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬取推特"><span class="nav-number">1.</span> <span class="nav-text">爬取推特</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、第一步：获取许可并登入"><span class="nav-number">1.1.</span> <span class="nav-text">1、第一步：获取许可并登入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tweet-的数据结构"><span class="nav-number">1.2.</span> <span class="nav-text">tweet 的数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#streaming-API"><span class="nav-number">1.3.</span> <span class="nav-text">streaming API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">1.4.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本分析"><span class="nav-number">1.5.</span> <span class="nav-text">文本分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间序列分析"><span class="nav-number">1.6.</span> <span class="nav-text">时间序列分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#粉丝状况"><span class="nav-number">1.7.</span> <span class="nav-text">粉丝状况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测量影响力"><span class="nav-number">1.8.</span> <span class="nav-text">测量影响力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论关系"><span class="nav-number">1.9.</span> <span class="nav-text">评论关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地图绘制"><span class="nav-number">1.10.</span> <span class="nav-text">地图绘制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

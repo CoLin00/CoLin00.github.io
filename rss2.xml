@@ -8,8 +8,46 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>记录生活和自己。</description>
-    <pubDate>Thu, 19 Oct 2017 11:09:17 GMT</pubDate>
+    <pubDate>Sat, 21 Oct 2017 10:27:35 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>【笔记】Mastering social media mining with Python (2)</title>
+      <link>http://yoursite.com/2017/10/20/2017-10-20-1/</link>
+      <guid>http://yoursite.com/2017/10/20/2017-10-20-1/</guid>
+      <pubDate>Fri, 20 Oct 2017 07:05:35 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;爬取推特&quot;&gt;&lt;a href=&quot;#爬取推特&quot; class=&quot;headerlink&quot; title=&quot;爬取推特&quot;&gt;&lt;/a&gt;爬取推特&lt;/h1&gt;&lt;h2 id=&quot;1、第一步：获取许可并登入&quot;&gt;&lt;a href=&quot;#1、第一步：获取许可并登入&quot; class=&quot;headerlink&quot; title=&quot;1、第一步：获取许可并登入&quot;&gt;&lt;/a&gt;1、第一步：获取许可并登入&lt;/h2&gt;&lt;p&gt;包含两部分：&lt;br&gt;&lt;code&gt;get_twitter_auth()&lt;/code&gt;  获得许可证&lt;br&gt;&lt;code&gt;get_twitter_client()&lt;/code&gt; 登入服务器&lt;/p&gt;
+&lt;p&gt;小实验：获取自己主页时间线的前十条&lt;br&gt;tweepy.Cursor&lt;br&gt;tweepy.Status&lt;/p&gt;
+&lt;p&gt;小实验2: 获取主页200条并存入 json&lt;br&gt;自己主页最多 800条；&lt;br&gt;别人主页最多 3200条；&lt;br&gt;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h1 id="爬取推特"><a href="#爬取推特" class="headerlink" title="爬取推特"></a>爬取推特</h1><h2 id="1、第一步：获取许可并登入"><a href="#1、第一步：获取许可并登入" class="headerlink" title="1、第一步：获取许可并登入"></a>1、第一步：获取许可并登入</h2><p>包含两部分：<br><code>get_twitter_auth()</code>  获得许可证<br><code>get_twitter_client()</code> 登入服务器</p><p>小实验：获取自己主页时间线的前十条<br>tweepy.Cursor<br>tweepy.Status</p><p>小实验2: 获取主页200条并存入 json<br>自己主页最多 800条；<br>别人主页最多 3200条；<br><a id="more"></a> </p><h2 id="tweet-的数据结构"><a href="#tweet-的数据结构" class="headerlink" title="tweet 的数据结构"></a>tweet 的数据结构</h2><h2 id="streaming-API"><a href="#streaming-API" class="headerlink" title="streaming API"></a>streaming API</h2><p>CustomListener class<br>    StreamListener<br>    on_data() on_error()<br>#19thCPC #19thPartyCongress</p><h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>标签频率；<br>推文标签分布；<br>提及人频率；</p><h2 id="文本分析"><a href="#文本分析" class="headerlink" title="文本分析"></a>文本分析</h2><p><strong>Tokenization</strong> 分词<br><strong>stop word removal</strong> 停顿词</p><h2 id="时间序列分析"><a href="#时间序列分析" class="headerlink" title="时间序列分析"></a>时间序列分析</h2><h2 id="粉丝状况"><a href="#粉丝状况" class="headerlink" title="粉丝状况"></a>粉丝状况</h2><p> 在量很大的情况下，选择 set 或者 numpy 来计算；</p><h2 id="测量影响力"><a href="#测量影响力" class="headerlink" title="测量影响力"></a>测量影响力</h2><p><strong>Term Frequency (TF)</strong><br><strong>Inverse Document Frequency (IDF)</strong><br><strong>TF-IDF statistics</strong></p><h2 id="评论关系"><a href="#评论关系" class="headerlink" title="评论关系"></a>评论关系</h2><p>未完全检测到，可能跟数据有关</p><h2 id="地图绘制"><a href="#地图绘制" class="headerlink" title="地图绘制"></a>地图绘制</h2>]]></content:encoded>
+      
+      <comments>http://yoursite.com/2017/10/20/2017-10-20-1/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>怎么理解 Python 爬虫</title>
+      <link>http://yoursite.com/2017/10/20/2017-10-20/</link>
+      <guid>http://yoursite.com/2017/10/20/2017-10-20/</guid>
+      <pubDate>Fri, 20 Oct 2017 02:33:44 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;由于自己的研究需要爬取 Twitter 和 Facebook 的社交数据，但自己又没有真正爬取过，所以需要好好学习一下，&lt;/p&gt;
+&lt;h2 id=&quot;Social-media-challenges-and-opportunities&quot;&gt;&lt;a href=&quot;#Social-medi
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>由于自己的研究需要爬取 Twitter 和 Facebook 的社交数据，但自己又没有真正爬取过，所以需要好好学习一下，</p><h2 id="Social-media-challenges-and-opportunities"><a href="#Social-media-challenges-and-opportunities" class="headerlink" title="Social media - challenges and opportunities"></a>Social media - challenges and opportunities</h2><p>【这一章其实都是理论，主要介绍抓取的技术，简单看一遍就可以进入第二章了】</p><h3 id="对社交媒体的理解"><a href="#对社交媒体的理解" class="headerlink" title="对社交媒体的理解"></a>对社交媒体的理解</h3><p>Internet-based applications<br>User-generated content<br>Networking</p><h3 id="本书要解决的问题"><a href="#本书要解决的问题" class="headerlink" title="本书要解决的问题"></a>本书要解决的问题</h3><p>how to extract useful knowledge from the data coming from the social media?</p><p><strong>knowledge hierarchy</strong></p><h3 id="社交媒体挖掘的机遇"><a href="#社交媒体挖掘的机遇" class="headerlink" title="社交媒体挖掘的机遇"></a>社交媒体挖掘的机遇</h3><p><strong>Application Programming Interface (API)</strong><br><strong>Representational State Transfer (REST)</strong><br><strong>RESTful API</strong></p><h3 id="社交媒体挖掘的挑战"><a href="#社交媒体挖掘的挑战" class="headerlink" title="社交媒体挖掘的挑战"></a>社交媒体挖掘的挑战</h3><p><strong>big data</strong><br><strong>structured data</strong><br><strong>unstructured data</strong><br> <strong>semi-structured data</strong><br> <strong>data integrity</strong><br> <strong>data access</strong><br> <strong>research and development (R&amp;D) processes</strong></p><h3 id="社交媒体挖掘的技术流程"><a href="#社交媒体挖掘的技术流程" class="headerlink" title="社交媒体挖掘的技术流程"></a>社交媒体挖掘的技术流程</h3><p>1、验证 Authentication<br>2、数据收集 Data collection<br>3、数据清理和预处理 Data cleaning and pre-processing<br>4、建模和分析 Modeling and analysis<br>5、结果展示 Result presentation</p><p><img src="/images/15084668916933.jpg" alt=""></p><p><strong>Open Authorization (OAuth)</strong><br>a user, consumer (our application), and resource provider (the social media platform).</p><p><strong>Text mining</strong><br><strong>Graph mining</strong></p><h2 id="Python-tools-for-data-science"><a href="#Python-tools-for-data-science" class="headerlink" title="Python tools for data science"></a>Python tools for data science</h2><h3 id="Python-的优点"><a href="#Python-的优点" class="headerlink" title="Python 的优点"></a>Python 的优点</h3><p>Declarative and intuitive syntax<br>Rich ecosystem for data processing<br>Efficiency</p><h2 id="Python-版本"><a href="#Python-版本" class="headerlink" title="Python 版本"></a>Python 版本</h2><p>3.4+ and 3.5+<br>pip and virtualenv<br>virtualenv 管理虚拟环境和安装依赖环境<br>Conda, Anaconda, and Miniconda</p><h2 id="数据分析工具"><a href="#数据分析工具" class="headerlink" title="数据分析工具"></a>数据分析工具</h2><p>NumPy and pandas<br><strong>Naming conventions</strong><br>numpy as np; pandas as pd; </p><h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><p><strong>Supervised learning</strong><br><strong>Naive Bayes (NB)</strong><br><strong>Support Vector Machine (SVM)</strong><br><strong>Neural Networks (NN)</strong><br><strong>training data</strong><br><strong>test data</strong><br><strong>Unsupervised learning</strong></p>]]></content:encoded>
+      
+      <comments>http://yoursite.com/2017/10/20/2017-10-20/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>终于弄好了～</title>
