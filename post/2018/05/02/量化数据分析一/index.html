@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+         <link rel="stylesheet" href="https://colin00.github.io/dist/font.css" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>量化数据分析(一) &middot; </title>
+        <meta name="description" content="列联表中的变量关系">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.40.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="量化数据分析(一)">
+<meta property="og:description" content="列联表中的变量关系">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin00.github.io/post/2018/05/02/%E9%87%8F%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%80/">
+        <link rel="stylesheet" href="https://colin00.github.io/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+        <script src="//yihui.name/js/math-code.js"></script>
+        <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+                
+        </script>
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="小站一会" href="https://colin00.github.io/">小站一会</a>
+                            </h1>
+                        
+                        <a class="button-square" href="https://colin00.github.io/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/CoLin00">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:colin92@qq.com">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="首页" href="/">首页</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="标签" href="/tags/">标签</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="关于" href="/page/about/">关于</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">量化数据分析(一)</h1>
+    
+        <p class="post-description" itemprop="description">列联表中的变量关系</p>
+    
+    
+    <p class="post-date">
+        <span> <time datetime="2018-05-02" itemprop="datePublished">2018-05-02</time></span>
+        <span> by  </span>
+        <span itemscope="" itemprop="author">
+            <span itemprop="name">
+                <a href="#" itemprop="url" rel="author">CoLin</a>
+            </span>
+        
+        </span>
+        <span> · 
+                共 10131 字 需要 21 分钟</span>
+        
+      
+    </p>
+    
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <div id="TOC">
+<ul>
+<li><a href="#1">实例1：美国城市黑人中分激进类别与宗教信仰虔诚度的关系</a></li>
+<li><a href="#2">实例2：对人类是从动物进化来的观点的认同</a></li>
+<li><a href="#3">实例3：南非职业地位的种族差异</a></li>
+<li><a href="#4">实例4：中国城乡文化水平的差异</a></li>
+<li><a>总结</a></li>
+</ul>
+</div>
+
+<p><a href="https://book.douban.com/subject/11578220/"><img src="https://img1.doubanio.com/view/subject/l/public/s11163499.jpg" style="max-width:20%;min-width:40px;float:right;margin:20px;" title="量化数据分析" /></a></p>
+<p>《量化数据分析：通过社会研究检验想法》（Quantitative Data Analysis : Doing Social Research to Test Ideas），<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>这本书比较详细地阐述了量化研究的操作流程，以及在研究中可能遇到的问题。在我看来，这是一本很实在的定量研究方法指导书，特别适合初学者和文科生。这本书还提供了案例的数据和 Stata 的操作步骤，<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>可以一边操作一边理解。</p>
+<p>书中指出量化分析有三个重要的因素：</p>
+<ol style="list-style-type: decimal">
+<li><strong>想法（idea）</strong>。没有想法指导的数据分析是毫无意义的，需要检验的想法通常被称为假设（hypotheses），除此之外还涉及理论（theories）。一个理论不必太宏大或太抽象。任何关于什么导致什么、两个变量之间为何且如何相关的观点都是理论。</li>
+<li><strong>信息（information）或数据（data）</strong>，它们被用来检验想法或假设（或理论）。</li>
+<li><strong>模型（model）</strong>，这是我们通过组织和处理数据来检验想法或假设的方法。模型包括两部分：统计方法的选择，以及针对分析中变量之间如何相关提出的假设。</li>
+</ol>
+<p>我将<strong>尝试用 R 尽可能地实现书中案例要表达的操作思想，但不希望死抠每一个操作步骤和结果的一致性；</strong> 我还要<strong>用自己的语言组织下对某个问题和方法的理解</strong>。希望在这个转换过程中，不但能为一些想要用 R 来操作书中例子的人提供帮助，而且能为我自己的量化之路打开更大的门吧。</p>
+<div id="1" class="section level1">
+<h1>实例1：美国城市黑人中分激进类别与宗教信仰虔诚度的关系</h1>
+<p>Religiosity by militancy among U.S. urban Blacks</p>
+<p>这个实例源自于 Marx 的一项研究，<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>该研究的目的在于揭示宗教如何影响黑人的民权意识，论文题目显示了两种观点，一种是认为信教的黑人比不信教的黑人的民权意识要弱，另一种观点则认为，信教黑人的民权意识更强。为分析宗教信仰与黑人激进表现之间的关系，最直接的办法就是构建表示二者关系的<code>列联表</code>，列联表可以利用对变量类目的归类来清晰呈现变量之间的关系。在这个问题中，我们要思考的是宗教信仰对黑人激进表现的影响，意味着“宗教信仰”是自变量，而黑人的“激进类别”则为因变量。在构建列联表的时候，通常是把自变量放在行，而因变量放在列中，如表 <a href="#tab:table12">1</a> 。按列来看，就是控制“宗教信仰虔诚度”，可以看到有宗教信仰的，不激进类别更多，而没宗教信仰的不激进类别反而更少；按行来看，激进人数是随着宗教信仰虔诚度降低而提高的，不激进人数则正好相反。</p>
+<pre class="r"><code>table1_2 &lt;- tribble(
+        ~激进类别,~非常虔诚,~有点儿虔诚,~不怎么虔诚,~根本不信教,~合计,
+        &quot;激进&quot;,    27,   30,   45,  69,  33,
+        &quot;不激进&quot;,    73,   70,   55,  31,  67,
+        &quot;合计&quot;,  100,   100,   100, 100,  100,
+        &quot;样本数&quot;,  &quot;（230）&quot;,   &quot;（532）&quot;,   &quot;（195）&quot;, &quot;（36）&quot;,   &quot;（993）&quot;
+)
+
+kable(table1_2,&quot;html&quot;, caption = &quot;1964年美国城市黑人按宗教信仰虔诚度划分的激进类别百分比&quot;, 
+      align = &#39;c&#39;,escape = F) %&gt;% 
+        add_header_above(c(&quot; &quot;=1, &quot;宗教信仰虔诚度&quot;=4, &quot; &quot;=1)) %&gt;% 
+        row_spec(3, extra_css = &quot;border-top: 0.75pt solid black&quot;) %&gt;% 
+        footnote(general = &#39;%&#39;,
+                 general_title = &quot;单位：&quot;,
+                 footnote_as_chunk = T)</code></pre>
+<table>
+<caption>
+<span id="tab:table12">Table 1: </span>1964年美国城市黑人按宗教信仰虔诚度划分的激进类别百分比
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+宗教信仰虔诚度
+</div>
+</th>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+激进类别
+</th>
+<th style="text-align:center;">
+非常虔诚
+</th>
+<th style="text-align:center;">
+有点儿虔诚
+</th>
+<th style="text-align:center;">
+不怎么虔诚
+</th>
+<th style="text-align:center;">
+根本不信教
+</th>
+<th style="text-align:center;">
+合计
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+激进
+</td>
+<td style="text-align:center;">
+27
+</td>
+<td style="text-align:center;">
+30
+</td>
+<td style="text-align:center;">
+45
+</td>
+<td style="text-align:center;">
+69
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+不激进
+</td>
+<td style="text-align:center;">
+73
+</td>
+<td style="text-align:center;">
+70
+</td>
+<td style="text-align:center;">
+55
+</td>
+<td style="text-align:center;">
+31
+</td>
+<td style="text-align:center;">
+67
+</td>
+</tr>
+<tr>
+<td style="text-align:center;border-top: 0.75pt solid black">
+合计
+</td>
+<td style="text-align:center;border-top: 0.75pt solid black">
+100
+</td>
+<td style="text-align:center;border-top: 0.75pt solid black">
+100
+</td>
+<td style="text-align:center;border-top: 0.75pt solid black">
+100
+</td>
+<td style="text-align:center;border-top: 0.75pt solid black">
+100
+</td>
+<td style="text-align:center;border-top: 0.75pt solid black">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+样本数
+</td>
+<td style="text-align:center;">
+（230）
+</td>
+<td style="text-align:center;">
+（532）
+</td>
+<td style="text-align:center;">
+（195）
+</td>
+<td style="text-align:center;">
+（36）
+</td>
+<td style="text-align:center;">
+（993）
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<strong>单位：</strong> <sup></sup> %
+</td>
+</tr>
+</tfoot>
+</table>
+<p>宗教与黑人民权意识之间是否就是这样单纯的关联呢？显然不仅仅这样，因此，我们需要考虑是否存在其他因素也可以解释这种关系，书中引入了“受教育程度”这个变量。将“受教育程度”作为控制变量，就要对各个变量进行比较的分析。首先，书中给出了受教育程度与宗教信仰虔诚度的列联表，在比较中发现，受教育程度和宗教信仰虔诚度之间是反向或负向相关：随着受教育程度提高，宗教信仰虔诚度下降。接着，书中构建了受教育程度与激进类别的列联表，比较中发现，受教育程度和激进之间存在正相关关系：随着受教育程度提高，表现激进的概率也升高了。最后将这几个变量综合了一下，在各受教育类别内研究宗教虔诚度和激进之间的关系，还构建了一个<code>三维列联表</code>，见表 <a href="#tab:table16">2</a> 。从表中可以发现，控制了受教育程度，宗教信仰虔诚度仍然抑制激进，也就是说，受教育程度不能完全解释宗教信仰虔诚度和激进之间的关系。</p>
+<pre class="r"><code>table1_6 &lt;- tribble(
+        ~宗教信仰程度,~小学,~高中,~大学,
+        &quot;非常虔诚&quot;,    17,   34,   38,
+        &quot;非常虔诚&quot;,    &quot;（108）&quot;,   &quot;（96）&quot;,   &quot;（26）&quot;,
+        &quot;有点儿虔诚&quot;,  22,   32,   48,
+        &quot;有点儿虔诚&quot;,  &quot;（201）&quot;,   &quot;（270）&quot;,   &quot;（61）&quot;,
+        &quot;不怎么虔诚或根本不信教&quot;, 32, 47, 68,
+        &quot;不怎么虔诚或根本不信教&quot;, &quot;（44）&quot;, &quot;（138）&quot;, &quot;（49）&quot;
+)
+
+kable(table1_6,&quot;html&quot;, caption = &quot;1964年美国城市黑人按宗教信仰虔诚度和受教育程度划分的激进的百分比（三维形式）&quot;, align = &#39;c&#39;,escape = F) %&gt;% 
+        add_header_above(c(&quot; &quot;=1, &quot;受教育程度&quot;=3)) %&gt;% 
+        column_spec(1,width = &#39;15em&#39; ,extra_css = &quot;text-align:left&quot;) %&gt;% 
+        collapse_rows(columns = 1) %&gt;% 
+        footnote(general = &#39;%&#39;,
+                 general_title = &quot;单位：&quot;,
+                 footnote_as_chunk = T)</code></pre>
+<table>
+<caption>
+<span id="tab:table16">Table 2: </span>1964年美国城市黑人按宗教信仰虔诚度和受教育程度划分的激进的百分比（三维形式）
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+受教育程度
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+宗教信仰程度
+</th>
+<th style="text-align:center;">
+小学
+</th>
+<th style="text-align:center;">
+高中
+</th>
+<th style="text-align:center;">
+大学
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 15em; text-align:leftvertical-align: middle !important;" rowspan="2">
+非常虔诚
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+34
+</td>
+<td style="text-align:center;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+（108）
+</td>
+<td style="text-align:center;">
+（96）
+</td>
+<td style="text-align:center;">
+（26）
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 15em; text-align:leftvertical-align: middle !important;" rowspan="2">
+有点儿虔诚
+</td>
+<td style="text-align:center;">
+22
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+（201）
+</td>
+<td style="text-align:center;">
+（270）
+</td>
+<td style="text-align:center;">
+（61）
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 15em; text-align:leftvertical-align: middle !important;" rowspan="2">
+不怎么虔诚或根本不信教
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+47
+</td>
+<td style="text-align:center;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+（44）
+</td>
+<td style="text-align:center;">
+（138）
+</td>
+<td style="text-align:center;">
+（49）
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<strong>单位：</strong> <sup></sup> %
+</td>
+</tr>
+</tfoot>
+</table>
+<p>前面是通过多个表格和三维列联表的形式，控制某个变量来分析两个变量之间的关系，这种分析方法也叫<code>偏相关分析</code>。利用这个分析，我们发现，受教育程度不能完全解释宗教信仰虔诚度和激进之间的反向关系。那我们就会产生疑问，受教育程度又在其中起了多大作用呢？我们可以在“控制变量”的思想下，剔除控制变量的影响，再构建一张表示两个变量之间平均关系强度的表，这种方法称为<code>直接标准化</code>，或<code>协变修正</code>（covariate adjustment）。</p>
+<p>我们先导入该书提供的原始数据，见表 <a href="#tab:data1">3</a>。</p>
+<pre class="r"><code>data1 &lt;- read_table(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/small_data_files/tab26_std.raw&quot;,
+                    col_names = c(&#39;mil&#39;,&#39;total&#39;, &#39;relig&#39;, &#39;educ&#39;)) %&gt;% 
+        mutate(
+                militant = as.integer(round((mil/100)*total))
+               ) 
+
+kable(data1, caption =&quot;1964年美国城市黑人激进类别、宗教信仰和教育水平&quot;)</code></pre>
+<table>
+<caption><span id="tab:data1">Table 3: </span>1964年美国城市黑人激进类别、宗教信仰和教育水平</caption>
+<thead>
+<tr class="header">
+<th align="right">mil</th>
+<th align="right">total</th>
+<th align="right">relig</th>
+<th align="right">educ</th>
+<th align="right">militant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">108</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="right">34</td>
+<td align="right">96</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="right">38</td>
+<td align="right">26</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="right">22</td>
+<td align="right">201</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">270</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">86</td>
+</tr>
+<tr class="even">
+<td align="right">48</td>
+<td align="right">61</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">29</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">44</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right">138</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="right">68</td>
+<td align="right">49</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">33</td>
+</tr>
+</tbody>
+</table>
+<p>实例数据中，各个变量的含义：</p>
+<ul>
+<li><code>mil</code>：激进类别中激进人数占对应分类的比例（四舍五入）</li>
+<li><code>total</code>：对应分类的样本总数</li>
+<li><code>relig</code>：宗教信仰虔诚度</li>
+<li><code>educ</code>：受教育程度</li>
+<li><code>militant</code>：激进类别中的激进人数</li>
+</ul>
+<p>首先，我们应该搞清楚“直接标准化”在这里处理的其实就是表 <a href="#tab:table16">2</a> 中呈现的数据，我们要把“受教育程度”浓缩成一个数值，也就是直接呈现在相同“宗教信仰虔诚度”中激进人数所占比例，又如表 <a href="#tab:table12">1</a> 所呈现的“宗教信仰虔诚度”与“激进类别”的关系。 这就意味着,我们要先按照“宗教信仰虔诚度”来划分，计算每个类别中激进人数占该信仰虔诚类别的比例，见表 <a href="#tab:tabrelig">4</a> 。</p>
+<pre class="r"><code>tabrelig &lt;- data1 %&gt;% 
+        mutate(
+                
+                religfc = to_label(rec(relig,
+                        rec = &quot;1 = 1[非常虔诚]; 2 = 2[有点儿虔诚]; 3 = 3[不怎么虔诚或根本不信教]&quot;
+                ))
+        ) %&gt;% 
+        group_by(relig,religfc) %&gt;% 
+        dplyr::summarise(
+                N = sum(total),
+                cases = sum(militant),
+                Crude = round(sum(militant)/N*100)
+        ) 
+
+# 转换为分类变量用 to_label ，这样可以显示 label 中的信息
+
+kable(tabrelig[-1],&#39;html&#39;, align = &#39;c&#39;,
+      col.names = c(&#39;宗教信仰虔诚度&#39;,&#39;宗教信仰样本数&#39;,&#39;激进人数&#39;,&#39;激进人数占比(%)&#39;),
+      caption = &quot;1964年美国城市黑人各宗教信仰虔诚度类别中激进人数占比&quot;) %&gt;% 
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:tabrelig">Table 4: </span>1964年美国城市黑人各宗教信仰虔诚度类别中激进人数占比
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+宗教信仰虔诚度
+</th>
+<th style="text-align:center;">
+宗教信仰样本数
+</th>
+<th style="text-align:center;">
+激进人数
+</th>
+<th style="text-align:center;">
+激进人数占比(%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;text-align:left">
+非常虔诚
+</td>
+<td style="text-align:center;">
+230
+</td>
+<td style="text-align:center;">
+61
+</td>
+<td style="text-align:center;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+有点儿虔诚
+</td>
+<td style="text-align:center;">
+532
+</td>
+<td style="text-align:center;">
+159
+</td>
+<td style="text-align:center;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+不怎么虔诚或根本不信教
+</td>
+<td style="text-align:center;">
+231
+</td>
+<td style="text-align:center;">
+112
+</td>
+<td style="text-align:center;">
+48
+</td>
+</tr>
+</tbody>
+</table>
+<p>这个表格中“样本数”是指各个宗教信仰虔诚度类别的 total 之和，“激进人数”则是该类别中 militant 之和。“激进人数占比”就是标准化前我们要计算得到的数据，反映的是激进人数在各个宗教信仰虔诚度中的状况，即 <span class="math inline">\(激进人数占比=\frac{激进人数}{样本数}\)</span>。</p>
+<p>接着我们要构建“控制变量”的总频数分布，并将其作为标准化的权重，见表 <a href="#tab:std">5</a>。在这里“教育类别样本数”是将各个受教育类别的 total 加总，而“教育类别占比”就是各个教育类别样本数在样本总人数的比例，即 <span class="math inline">\(教育类别占比=\frac{教育类别人数}{样本总人数}\)</span> ，其中样本总人数为 993。</p>
+<pre class="r"><code>standard &lt;- data1 %&gt;% 
+        mutate(
+                educfc = to_label(rec(educ,
+                        rec = &quot;1 = 1[小学]; 2 =2 [高中]; 3 = 3[大学]&quot;
+                ))
+        ) %&gt;% 
+        group_by(educ,educfc) %&gt;% 
+        dplyr::summarise(
+                educ_pop = sum(total),
+                std_educ = sum(total)/sum(data1$total)
+        ) 
+
+
+kable(standard[-1],&#39;html&#39;, align = &#39;c&#39;,
+      col.names = c(&#39;受教育程度&#39;,&#39;教育类别样本数&#39;,&#39;教育类别占比&#39;),
+      caption = &quot;1964年美国城市黑人受教育程度标准化分布&quot;) %&gt;% 
+         footnote(general = sum(data1$total),
+                 general_title = &quot;总人数：&quot;,
+                 footnote_as_chunk = T)</code></pre>
+<table>
+<caption>
+<span id="tab:std">Table 5: </span>1964年美国城市黑人受教育程度标准化分布
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+受教育程度
+</th>
+<th style="text-align:center;">
+教育类别样本数
+</th>
+<th style="text-align:center;">
+教育类别占比
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+小学
+</td>
+<td style="text-align:center;">
+353
+</td>
+<td style="text-align:center;">
+0.355
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+高中
+</td>
+<td style="text-align:center;">
+504
+</td>
+<td style="text-align:center;">
+0.508
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+大学
+</td>
+<td style="text-align:center;">
+136
+</td>
+<td style="text-align:center;">
+0.137
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<strong>总人数：</strong> <sup></sup> 993
+</td>
+</tr>
+</tfoot>
+</table>
+<p>最后，我们要把权重加给激进人数中，算出其加权平均值，见表 <a href="#tab:directstd">6</a> 。这里就是按照表 <a href="#tab:table16">2</a> 的格式，对每个单元格的数值加权汇总，即在同一个“宗教信仰虔诚度”中，<span class="math inline">\(标准化指数=\sum各类教育程度激进人数\times各类标准化受教育程度\)</span>。</p>
+<pre class="r"><code>directstd &lt;- data1 %&gt;% 
+        merge(standard) %&gt;% 
+        merge(tabrelig) %&gt;% 
+        mutate(
+                product = (militant/total)*std_educ
+        ) %&gt;% 
+        group_by(religfc) %&gt;% 
+        dplyr::summarise(
+                Crude = round(sum(militant)/sum(total)*100),
+                Adj_rate = round(sum(product)*100),
+                N = sum(total)
+        )
+
+directstd %&gt;% 
+        add_row(religfc=&quot;百分比的变化范围&quot;, 
+                Crude=max(directstd$Crude)-min(directstd$Crude),
+                Adj_rate=max(directstd$Adj_rate)-min(directstd$Adj_rate),
+                N=&quot;&quot; 
+                ) %&gt;% 
+        kable(&#39;html&#39;, align = &#39;c&#39;,
+      col.names = c(&#39;宗教信仰虔诚度&#39;,&#39;标准化前（%）&#39;,&#39;标准化后（%）&#39;,&#39;样本数&#39;),
+      caption = &quot;将1964年美国城市黑人受教育程度标准化前后分宗教信仰虔诚度表现激进比例的比较&quot;
+      ) %&gt;% 
+         footnote(general = sum(data1$total),
+                 general_title = &quot;总人数：&quot;,
+                 footnote_as_chunk = T) %&gt;% 
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:directstd">Table 6: </span>将1964年美国城市黑人受教育程度标准化前后分宗教信仰虔诚度表现激进比例的比较
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+宗教信仰虔诚度
+</th>
+<th style="text-align:center;">
+标准化前（%）
+</th>
+<th style="text-align:center;">
+标准化后（%）
+</th>
+<th style="text-align:center;">
+样本数
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;text-align:left">
+非常虔诚
+</td>
+<td style="text-align:center;">
+27
+</td>
+<td style="text-align:center;">
+29
+</td>
+<td style="text-align:center;">
+230
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+有点儿虔诚
+</td>
+<td style="text-align:center;">
+30
+</td>
+<td style="text-align:center;">
+30
+</td>
+<td style="text-align:center;">
+532
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+不怎么虔诚或根本不信教
+</td>
+<td style="text-align:center;">
+48
+</td>
+<td style="text-align:center;">
+44
+</td>
+<td style="text-align:center;">
+231
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+百分比的变化范围
+</td>
+<td style="text-align:center;">
+21
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<strong>总人数：</strong> <sup></sup> 993
+</td>
+</tr>
+</tfoot>
+</table>
+<p>我们可以从表中看到，标准化前激进人数占宗教信仰比极差是 21%，而标准化后是 15%，也就是说在控制了受教育程度之后，差值降低了 29%，我们就可以说受教育程度大概“解释”了宗教信仰虔诚度和激进之间关系的 1/3。</p>
+</div>
+<div id="2" class="section level1">
+<h1>实例2：对人类是从动物进化来的观点的认同</h1>
+<p>Belief that humans evolved from animals</p>
+<p>前面的实例涉及的是一个控制变量（“受教育程度”），而往往我们面对的是两个或多个控制变量，这个情况下该如何利用直接标准化来分析一个变量对另一个变量的效应呢？这里引入美国国家民意研究中心（NORC）主持的综合社会调查（General Social Survey, GSS）的数据，以“进化论”的接受程度为例来具体介绍。</p>
+<p>1993年、1994年和2000年的调查中都问了同一个问题：</p>
+<blockquote>
+<p>For each statement below, just check the box that comes closest to your opinion true it is. ln your opinion, how true is this? . . . Human beings developed from earlier species of animals</p>
+<p>对下面的每一个陈述，在方框中选择与您的观点最接近的选项。在您看来，下面这个观点有多正确？···人类起源于早期的动物种群。</p>
+</blockquote>
+<p>我们把这几年的数据合并，并去除数据中的缺失值，获得分年份和加总的频率比例表格，见表 <a href="#tab:gsstotal">7</a></p>
+<pre class="r"><code>sjt.xtab(
+        gss$scitest4_fc,
+        gss$year,
+        show.col.prc = T,
+        show.obs = F,
+        show.summary = F,
+        digits = 1,
+        tdcol.col = &quot;black&quot;,
+        prc.sign = &#39; &#39;,
+        show.legend = T,
+        title = &quot;(#tab:gsstotal) 美国成年人对进化论持不同态度的百分比分布&quot;
+        ) </code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:gsstotal">Table 7: </span> 美国成年人对进化论持不同态度的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+humans evolved from<br>animals
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+gss yea for this<br>respondent
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+1993
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+1994
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+2000
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+definitely true
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15.2 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15.3 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15.7 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">15.4 </span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+probably true
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">33 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">33.1 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">30.5 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">32.3 </span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+probably not true
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">14.8 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18.2 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">17.7 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">16.8 </span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+definitely not true
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">37 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">33.4 </span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">36.1 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">35.5 </span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">100 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">100 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">100 </span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">100 </span>
+</td>
+</tr>
+</table>
+<p>
+<span style="color:black;">% within gss yea for this respondent</span><br>
+</p>
+<p>从表中可以看到，美国绝大部分成年人并不接受“进化论是科学”的这一观点，接着产生了一个猜测，这种现象可能与近年越来越多人坚持宗教原教旨主义的观点有关，我们就来分析下宗教派别与对这一观点的接受度之间的关系。</p>
+<pre class="r"><code># 重新编码的地方还是有问题，不知道怎么改写，暂时这样吧。
+gss &lt;- gss %&gt;%
+        mutate(
+                religx = rec(relig, rec = &quot;1=2; 2=3; 10:11=4; 3=5; 5:9,12:13,else,NA=6; 4=7&quot;),
+                religx = if_else(relig == 1 &amp; (denom == 10 | (denom &gt;= 12 &amp; denom &lt;= 15) | denom == 60), 1, religx), 
+                ev = rec(scitest4, rec = &quot;1=1 [完全正确]; 2:4=0 [不完全正确]; else=NA&quot;),
+                ed = rec(educ,
+                         rec = &quot;0:12=1 [高中及以下]; 13:15=2 [大学未毕业]; 16=3 [大学毕业];17:20=4 [研究生];else=NA&quot;), 
+                agecat = rec(age, rec = &quot;18:49=1 [18-49]; 50:69=2 [50-69]; 70:max=3 [70+]; else=NA&quot;),
+                religx_fc = fct_recode (
+                        as.factor(religx),
+                        &quot;新教原教旨主义者&quot; = &#39;1&#39;,
+                        &quot;新教宗派主义者&quot; = &#39;2&#39;,
+                        &quot;天主教徒&quot; = &#39;3&#39;,
+                        &quot;其他基督教徒&quot; = &#39;4&#39;,
+                        &quot;犹太教徒&quot; = &#39;5&#39;,
+                        &quot;其他宗教信仰群体&quot; = &#39;6&#39;,
+                        &quot;不信教的群体&quot; = &#39;7&#39;
+                        )
+        ) %&gt;% 
+        filter(!is.na(ev) &amp; !is.na(ed) &amp; !is.na(religx) &amp; !is.na(agecat))</code></pre>
+<p>从分宗教信仰的表中大致看出（见表 <a href="#tab:religion">8</a> ），宗教信仰群体之间表现出的对进化论观点的差别很有可能或至少在某种程度上是虚假的，我们可以猜测，不同宗教信仰群体之间的受教育程度和年龄可能解释了部分差异，为确定这种可能性，我们需要进一步分析不同宗教信仰群体在年龄（见表 <a href="#tab:age">9</a> 和表 <a href="#tab:religage">10</a> ）和受教育程度（见表 <a href="#tab:educ">11</a> 和表 <a href="#tab:religedu">12</a>）上是否有不同。</p>
+<pre class="r"><code>sjt.xtab(
+        gss$religx_fc,
+        gss$ev,
+        show.row.prc = T,
+        digits = 2,
+        show.summary = F,
+        var.labels = c(&#39;宗教信仰群体&#39;, &#39;对人类是从动物进化来的态度&#39;),
+        title = &quot;(#tab:religion) 分宗教信仰群体接受进化论者一科学观点的百分比分布&quot;,
+        string.total = &#39;总计&#39;,
+        tdcol.row = &quot;black&quot;
+        )     </code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:religion">Table 8: </span> 分宗教信仰群体接受进化论者一科学观点的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+宗教信仰群体
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="2">
+对人类是从动物进化来的态度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+不完全正确
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+完全正确
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教原教旨主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">891</span><br><span style="color:black;">92.05 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">77</span><br><span style="color:black;">7.95 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">968</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教宗派主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1071</span><br><span style="color:black;">88.15 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">144</span><br><span style="color:black;">11.85 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">1215</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+天主教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">705</span><br><span style="color:black;">82.17 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">153</span><br><span style="color:black;">17.83 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">858</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他基督教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">17</span><br><span style="color:black;">94.44 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span><br><span style="color:black;">5.56 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">18</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+犹太教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">51</span><br><span style="color:black;">61.45 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">32</span><br><span style="color:black;">38.55 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">83</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他宗教信仰群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">86</span><br><span style="color:black;">75.44 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">28</span><br><span style="color:black;">24.56 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">114</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+不信教的群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">264</span><br><span style="color:black;">67.52 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">127</span><br><span style="color:black;">32.48 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">391</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3085</span><br><span style="color:black;">84.59 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">562</span><br><span style="color:black;">15.41 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3647</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+</table>
+<pre class="r"><code>sjt.xtab(
+        gss$agecat,
+        gss$ev,
+        show.row.prc = T,
+        show.summary = F,
+        var.labels = c(&quot;年龄组&quot;, &quot;对人类是从动物进化来的态度&quot;),
+        title = &quot;(#tab:age)  分年龄接受进化论者一科学观点的百分比分布&quot;,
+        string.total = &quot;总计&quot;,
+        tdcol.row = &quot;black&quot;
+        )</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:age">Table 9: </span> 分年龄接受进化论者一科学观点的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+年龄组
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="2">
+对人类是从动物进化来的态度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+不完全正确
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+完全正确
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+18-49
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1949</span><br><span style="color:black;">82.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">415</span><br><span style="color:black;">17.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">2364</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+50-69
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">765</span><br><span style="color:black;">86.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">120</span><br><span style="color:black;">13.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">885</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+70+
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">371</span><br><span style="color:black;">93.2 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">27</span><br><span style="color:black;">6.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">398</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3085</span><br><span style="color:black;">84.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">562</span><br><span style="color:black;">15.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3647</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+</table>
+<pre class="r"><code>sjt.xtab(
+        gss$religx_fc,
+        gss$agecat,
+        show.row.prc = T,
+        show.summary = F,
+        var.labels = c(&quot;宗教信仰群体&quot;, &quot;年龄组&quot;),
+        title = &quot;(#tab:religage)  各宗教信仰群体年龄的百分比分布&quot;,
+        string.total = &quot;总计&quot;,
+        tdcol.row = &quot;black&quot;
+        )</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:religage">Table 10: </span> 各宗教信仰群体年龄的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+宗教信仰群体
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+年龄组
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+18-49
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+50-69
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+70+
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教原教旨主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">577</span><br><span style="color:black;">59.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">270</span><br><span style="color:black;">27.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">121</span><br><span style="color:black;">12.5 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">968</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教宗派主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">728</span><br><span style="color:black;">59.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">304</span><br><span style="color:black;">25 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">183</span><br><span style="color:black;">15.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">1215</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+天主教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">582</span><br><span style="color:black;">67.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">213</span><br><span style="color:black;">24.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">63</span><br><span style="color:black;">7.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">858</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他基督教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">16</span><br><span style="color:black;">88.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span><br><span style="color:black;">11.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span><br><span style="color:black;">0 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">18</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+犹太教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">51</span><br><span style="color:black;">61.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">21</span><br><span style="color:black;">25.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">11</span><br><span style="color:black;">13.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">83</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他宗教信仰群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">97</span><br><span style="color:black;">85.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15</span><br><span style="color:black;">13.2 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span><br><span style="color:black;">1.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">114</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+不信教的群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">313</span><br><span style="color:black;">80.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">60</span><br><span style="color:black;">15.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18</span><br><span style="color:black;">4.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">391</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">2364</span><br><span style="color:black;">64.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">885</span><br><span style="color:black;">24.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">398</span><br><span style="color:black;">10.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3647</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+</table>
+<pre class="r"><code>sjt.xtab(
+        gss$ed,
+        gss$ev,
+        show.row.prc = T,
+        show.summary = F,
+        var.labels = c(&quot;受教育程度&quot;, &quot;对人类是从动物进化来的态度&quot;),
+        title = &quot;(#tab:educ)  分受教育程度接受进化论者一科学观点的百分比分布&quot;,
+        string.total = &quot;总计&quot;,
+        tdcol.row = &quot;black&quot;
+        )</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:educ">Table 11: </span> 分受教育程度接受进化论者一科学观点的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+受教育程度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="2">
+对人类是从动物进化来的态度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+不完全正确
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+完全正确
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+高中及以下
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1575</span><br><span style="color:black;">90.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">159</span><br><span style="color:black;">9.2 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">1734</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+大学未毕业
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">822</span><br><span style="color:black;">88.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">111</span><br><span style="color:black;">11.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">933</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+大学毕业
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">420</span><br><span style="color:black;">75.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">139</span><br><span style="color:black;">24.9 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">559</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+研究生
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">268</span><br><span style="color:black;">63.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">153</span><br><span style="color:black;">36.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">421</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3085</span><br><span style="color:black;">84.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">562</span><br><span style="color:black;">15.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3647</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+</table>
+<pre class="r"><code>sjt.xtab(
+        gss$religx_fc,
+        gss$ed,
+        show.row.prc = T,
+        show.summary = F,
+        var.labels = c(&quot;宗教信仰群体&quot;, &quot;受教育程度&quot;),
+        title = &quot;(#tab:religedu)  各宗教信仰群体教育获得的百分比分布&quot;,
+        string.total = &quot;总计&quot;,
+        tdcol.row = &quot;black&quot;
+        )</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:religedu">Table 12: </span> 各宗教信仰群体教育获得的百分比分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+宗教信仰群体
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="4">
+受教育程度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+高中及以下
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+大学未毕业
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+大学毕业
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+研究生
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教原教旨主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">539</span><br><span style="color:black;">55.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">256</span><br><span style="color:black;">26.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">104</span><br><span style="color:black;">10.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">69</span><br><span style="color:black;">7.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">968</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+新教宗派主义者
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">577</span><br><span style="color:black;">47.5 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">324</span><br><span style="color:black;">26.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">184</span><br><span style="color:black;">15.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">130</span><br><span style="color:black;">10.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">1215</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+天主教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">391</span><br><span style="color:black;">45.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">207</span><br><span style="color:black;">24.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">155</span><br><span style="color:black;">18.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">105</span><br><span style="color:black;">12.2 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">858</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他基督教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">11</span><br><span style="color:black;">61.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span><br><span style="color:black;">16.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span><br><span style="color:black;">16.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span><br><span style="color:black;">5.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">18</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+犹太教徒
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span><br><span style="color:black;">15.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18</span><br><span style="color:black;">21.7 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">26</span><br><span style="color:black;">31.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">26</span><br><span style="color:black;">31.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">83</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+其他宗教信仰群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">41</span><br><span style="color:black;">36 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">28</span><br><span style="color:black;">24.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">24</span><br><span style="color:black;">21.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">21</span><br><span style="color:black;">18.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">114</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+不信教的群体
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">162</span><br><span style="color:black;">41.4 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">97</span><br><span style="color:black;">24.8 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">63</span><br><span style="color:black;">16.1 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">69</span><br><span style="color:black;">17.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">391</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">1734</span><br><span style="color:black;">47.5 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">933</span><br><span style="color:black;">25.6 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">559</span><br><span style="color:black;">15.3 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">421</span><br><span style="color:black;">11.5 %</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">3647</span><br><span style="color:black;">100 %</span>
+</td>
+</tr>
+</table>
+<p>以上的分析结果显示，各宗教信仰群体之间在年龄和受教育程度上的差异确实部分地解释了在接受科学进化论观点上我们所观察到的差异。</p>
+<p>为了进一步考察不同宗教信仰群体在年龄和受教育程度上的差异多大程度上解释了不同宗教信仰群体在接受进化论方面的差异，我们可以利用受教育程度和年龄对认同宗教/进化论观点这两者之间的关系进行直接标准化：</p>
+<ol style="list-style-type: decimal">
+<li>先确定整个样本关于年龄和受教育程度的联合分布。（见表 <a href="#tab:educage">13</a>）</li>
+<li>计算每个宗教信仰群体接受进化论这一科学观点的分年龄和受教育程度的占比。</li>
+<li>将联合分布作为权重，对占比进行加权处理。（见表 <a href="#tab:gssfinal">14</a>）</li>
+</ol>
+<pre class="r"><code>sjt.xtab(
+        gss$ed,
+        gss$agecat,
+        hundret = &quot;1.0&quot;,
+        show.cell.prc  = T,
+        show.obs = F,
+        show.summary = F,
+        prc.sign = &#39;&#39;,
+        var.labels = c(&quot;受教育程度&quot;, &quot;年龄组&quot;),
+        title = &quot;(#tab:educage)   受教育程度和年龄的联合概率分布&quot;,
+        string.total = &quot;总计&quot;,
+        tdcol.cell  = &quot;black&quot;
+        )</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">
+<span id="tab:educage">Table 13: </span> 受教育程度和年龄的联合概率分布
+</caption>
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+受教育程度
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+年龄组
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+总计
+</th>
+</tr>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+18-49
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+50-69
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+70+
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+高中及以下
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">27.5</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">12.5</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7.5</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">47.5</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+大学未毕业
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18.4</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5.6</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1.5</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">25.5</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+大学毕业
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">11</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3.2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1.2</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">15.4</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+研究生
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2.9</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0.7</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">11.6</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+总计
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">64.8</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">24.3</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">10.9</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">100</span>
+</td>
+</tr>
+</table>
+<pre class="r"><code>lastgss &lt;- gss %&gt;% 
+        group_by(agecat, ed) %&gt;%
+        summarise(n = n()) %&gt;%
+        ungroup() %&gt;%
+        mutate(s = sum(n), p = n / s) %&gt;% 
+        left_join(
+                gss %&gt;% 
+                        group_by(agecat, ed, religx_fc) %&gt;%
+                        summarise(case = n()) 
+                ) %&gt;% 
+        left_join(
+                gss %&gt;% 
+                        filter(ev == 1) %&gt;%
+                        group_by(agecat, ed, religx_fc) %&gt;%
+                        summarise(cercase = n()) 
+                ) %&gt;% 
+        mutate(
+                cerpop = cercase/case,
+                product=p*cerpop
+        )
+        
+
+lastgss %&gt;% 
+        group_by(religx_fc) %&gt;%
+        summarise(
+                crude = round((sum(cercase, na.rm = T) / sum(case, na.rm = T)) * 100, 1),
+                adj = round(sum(product, na.rm = T) * 100, 1),
+                N = sum(case)
+        ) %&gt;% 
+        kable(&#39;html&#39;, align = &#39;c&#39;,
+              col.names = c(&#39;宗教信仰群体&#39;, &#39;标准化前（%）&#39;, &#39;标准化后（%）&#39;, &#39;样本数&#39;),
+              caption = &quot;对受教育程度和年龄进行标准化前后接受进化论这一科学观点的百分比&quot;
+      ) %&gt;% 
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:gssfinal">Table 14: </span>对受教育程度和年龄进行标准化前后接受进化论这一科学观点的百分比
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+宗教信仰群体
+</th>
+<th style="text-align:center;">
+标准化前（%）
+</th>
+<th style="text-align:center;">
+标准化后（%）
+</th>
+<th style="text-align:center;">
+样本数
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;text-align:left">
+新教原教旨主义者
+</td>
+<td style="text-align:center;">
+8.0
+</td>
+<td style="text-align:center;">
+9.7
+</td>
+<td style="text-align:center;">
+968
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+新教宗派主义者
+</td>
+<td style="text-align:center;">
+11.9
+</td>
+<td style="text-align:center;">
+12.3
+</td>
+<td style="text-align:center;">
+1215
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+天主教徒
+</td>
+<td style="text-align:center;">
+17.8
+</td>
+<td style="text-align:center;">
+16.6
+</td>
+<td style="text-align:center;">
+858
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+其他基督教徒
+</td>
+<td style="text-align:center;">
+5.6
+</td>
+<td style="text-align:center;">
+2.7
+</td>
+<td style="text-align:center;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+犹太教徒
+</td>
+<td style="text-align:center;">
+38.6
+</td>
+<td style="text-align:center;">
+36.0
+</td>
+<td style="text-align:center;">
+83
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+其他宗教信仰群体
+</td>
+<td style="text-align:center;">
+24.6
+</td>
+<td style="text-align:center;">
+18.1
+</td>
+<td style="text-align:center;">
+114
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+不信教的群体
+</td>
+<td style="text-align:center;">
+32.5
+</td>
+<td style="text-align:center;">
+30.2
+</td>
+<td style="text-align:center;">
+391
+</td>
+</tr>
+</tbody>
+</table>
+<p>最后我们发现，尽管宗教信仰群体分别与年龄和受教育程度有关，且对进化论的赞同也与之有关，但直接标准化后，不同宗教信仰群体对进化论赞同的组间差异几乎没有变化，因此，其不应该简单归结为年龄和受教育程度方面的差异，这可能与各宗教教义有关。</p>
+</div>
+<div id="3" class="section level1">
+<h1>实例3：南非职业地位的种族差异</h1>
+<p>Direct standardization of a table with many categories and an external standard population.</p>
+<p>这个实例的研究问题 <a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> 是：南非职业地位的种族差异在多大程度上可以被教育方面的种族差异所解释。 <a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> 这里采用白人的受教育程度，对其他种族的职业类别进行直接标准化。</p>
+<pre class="r"><code>library(foreign)
+sawc &lt;- read.dta(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/sawc04.dta&quot;) %&gt;% 
+        # 重点，转化成 tibble
+        as.tbl() %&gt;% 
+        filter(sample!=10) %&gt;% 
+        select(sex,age,educ,occ, race ,activity, wt00) %&gt;% 
+        filter( age&gt;=20 &amp; age&lt;=69 &amp; sex==1) %&gt;% 
+        mutate(
+                agegrp = rec(age,
+                             rec = &quot;20:29=1[20-29]; 30:39=2 [30-39]; 40:49=3 [40-49]; 50:59=4 [50-59]; 60:69=5 [60-69]; else=NA&quot;),
+                educgrp = rec(educ,
+                              rec = &quot;0=1 [None]; 1:9,25:26=2 [Primary]; 10:19=3 [Secondary]; 20:24=4 [Tertiary]; else=NA&quot; ),
+                isco88 = as.integer(occ/10),
+                isco88 = na_if(isco88,isco88 &lt;= 0),
+                iscogrp = rec(isco88,
+                              rec = &quot;1000:1999=1 ; 2000:2999=2  ; 3000:3999=3 ; 4000:4999=4 ; 5000:5199=5 ; 5200:5999=6 ; 6000:6999=7 ; 7000:7999=8 ; 8000:8999=9  ; 9000:9199,9214:9999=10 ; 9200:9213=11; else=NA&quot;),
+                iscogrp = if_else(is.na(iscogrp) &amp; activity&gt;=0 &amp; activity&lt;=27,12,iscogrp),
+                iscogrp = if_else( is.na(iscogrp) &amp; (activity==28 | activity==33),13,iscogrp),
+                iscogrp = rec(iscogrp,
+                              rec = &quot;1=1 [管理人员]; 2=2 [专业人员] ; 3=3 [技术人员]; 4=4 [办事员]; 5=5 [服务人员]; 6=6 [销售人员]; 7=7 [农场主]; 8=8 [技术工人]; 9=9 [半技术人员] ; 10=10 [非技术人员]; 11=11 [农民]; 12=12[职业未知]; 13=13[失业者];else=NA&quot;),
+                race = rec(race,
+                           rec = &quot;1=1[白种人]; 2=2[亚裔]; 3=3[有色人种]; 4=4[黑人]; else=NA&quot;)
+        ) %&gt;% 
+        filter(!is.na(educgrp)&amp;!is.na(iscogrp)&amp;!is.na(race))</code></pre>
+<pre class="r"><code>sastd &lt;- read_table(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/small_data_files/sawtdist.raw&quot;, col_names = c(&#39;educgrp&#39;,&#39;std_pop&#39;)) %&gt;% 
+        mutate(
+                educgrp = as.double(educgrp)
+        )
+
+bfstd &lt;- sawc %&gt;% 
+        group_by(iscogrp,race) %&gt;% 
+        summarise(case=n()) %&gt;% 
+        ungroup() %&gt;% 
+        left_join(
+                sawc %&gt;% 
+                        group_by(race) %&gt;% 
+                        summarise(race_n=n())
+        ) %&gt;% 
+        left_join(
+                sawc %&gt;% 
+                        group_by(educgrp,race) %&gt;% 
+                        summarise(edcu_race=n())
+        ) %&gt;% 
+        left_join(
+                sawc %&gt;% 
+                        group_by(educgrp,race,iscogrp) %&gt;% 
+                        summarise(iscogrp_race=n())
+        ) %&gt;% 
+        # 拼合的数据 type 要对应
+       left_join(sastd) %&gt;%  
+        mutate(
+                racecrude = case/race_n,
+                rate = iscogrp_race/edcu_race,
+                product = rate*std_pop,
+                iscogrp_f = as_label(iscogrp),
+                race_f = as_label(race)
+                
+        )
+
+
+
+afstd &lt;- bfstd %&gt;% 
+        group_by(iscogrp_f,race_f) %&gt;% 
+        summarise(
+                adj=round(sum(product,na.rm = T)*100,1)
+                ) 
+
+bftab &lt;- bfstd %&gt;% 
+        group_by(iscogrp_f,race_f) %&gt;% 
+        summarise(
+                crude = round((sum(case,na.rm = T)/sum(race_n,na.rm = T))*100,1)
+        ) 
+
+
+bfdiff &lt;- function(x) sum(abs(bftab[,1]-x))/2
+bftab &lt;- xtabs(crude~iscogrp_f+race_f,bftab)  
+        
+aftab &lt;- xtabs(adj~iscogrp_f+race_f,afstd)
+afdiff &lt;- function(x) sum(abs(aftab[,1]-x))/2</code></pre>
+<pre class="r"><code>bftab %&gt;%
+        addmargins(1, FUN = list(list(合计=sum,相对于白人的相异指数 = bfdiff))) %&gt;%
+        kable(&#39;html&#39;, align = &#39;c&#39;,
+        caption = &quot;20世纪90年代早期南非20-69岁男性分种族各职业的百分比分布（标准化前）&quot;) %&gt;%
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:bftab">Table 15: </span>20世纪90年代早期南非20-69岁男性分种族各职业的百分比分布（标准化前）
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+白种人
+</th>
+<th style="text-align:center;">
+亚裔
+</th>
+<th style="text-align:center;">
+有色人种
+</th>
+<th style="text-align:center;">
+黑人
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;text-align:left">
+管理人员
+</td>
+<td style="text-align:center;">
+18.4
+</td>
+<td style="text-align:center;">
+9.7
+</td>
+<td style="text-align:center;">
+3.3
+</td>
+<td style="text-align:center;">
+0.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+专业人员
+</td>
+<td style="text-align:center;">
+13.7
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+<td style="text-align:center;">
+5.3
+</td>
+<td style="text-align:center;">
+3.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+技术人员
+</td>
+<td style="text-align:center;">
+17.1
+</td>
+<td style="text-align:center;">
+11.7
+</td>
+<td style="text-align:center;">
+5.1
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+办事员
+</td>
+<td style="text-align:center;">
+7.2
+</td>
+<td style="text-align:center;">
+13.3
+</td>
+<td style="text-align:center;">
+7.1
+</td>
+<td style="text-align:center;">
+5.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+服务人员
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+3.9
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+6.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+销售人员
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+<td style="text-align:center;">
+8.3
+</td>
+<td style="text-align:center;">
+2.8
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+农场主
+</td>
+<td style="text-align:center;">
+4.6
+</td>
+<td style="text-align:center;">
+0.5
+</td>
+<td style="text-align:center;">
+2.3
+</td>
+<td style="text-align:center;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+技术工人
+</td>
+<td style="text-align:center;">
+18.5
+</td>
+<td style="text-align:center;">
+21.1
+</td>
+<td style="text-align:center;">
+22.2
+</td>
+<td style="text-align:center;">
+14.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+半技术人员
+</td>
+<td style="text-align:center;">
+3.2
+</td>
+<td style="text-align:center;">
+12.9
+</td>
+<td style="text-align:center;">
+10.4
+</td>
+<td style="text-align:center;">
+16.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+非技术人员
+</td>
+<td style="text-align:center;">
+0.6
+</td>
+<td style="text-align:center;">
+3.6
+</td>
+<td style="text-align:center;">
+14.4
+</td>
+<td style="text-align:center;">
+13.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+农民
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+0.2
+</td>
+<td style="text-align:center;">
+7.8
+</td>
+<td style="text-align:center;">
+2.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+职业未知
+</td>
+<td style="text-align:center;">
+9.8
+</td>
+<td style="text-align:center;">
+5.6
+</td>
+<td style="text-align:center;">
+11.4
+</td>
+<td style="text-align:center;">
+13.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+失业者
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+17.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+合计
+</td>
+<td style="text-align:center;">
+100.2
+</td>
+<td style="text-align:center;">
+100.0
+</td>
+<td style="text-align:center;">
+100.1
+</td>
+<td style="text-align:center;">
+100.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+相对于白人的相异指数
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+29.1
+</td>
+<td style="text-align:center;">
+37.9
+</td>
+<td style="text-align:center;">
+52.4
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>aftab %&gt;% addmargins(1, FUN = list(list(合计=sum,相对于白人的相异指数 = afdiff))) %&gt;%
+ kable(&#39;html&#39;, align = &#39;c&#39;,
+      caption = &quot;20世纪90年代早期南非20-69岁男性分种族各职业的百分比分布（标准化后）&quot;
+      ) %&gt;% 
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:aftab">Table 16: </span>20世纪90年代早期南非20-69岁男性分种族各职业的百分比分布（标准化后）
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+白种人
+</th>
+<th style="text-align:center;">
+亚裔
+</th>
+<th style="text-align:center;">
+有色人种
+</th>
+<th style="text-align:center;">
+黑人
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;text-align:left">
+管理人员
+</td>
+<td style="text-align:center;">
+18.1
+</td>
+<td style="text-align:center;">
+10.5
+</td>
+<td style="text-align:center;">
+5.2
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+专业人员
+</td>
+<td style="text-align:center;">
+13.2
+</td>
+<td style="text-align:center;">
+13.6
+</td>
+<td style="text-align:center;">
+11.9
+</td>
+<td style="text-align:center;">
+16.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+技术人员
+</td>
+<td style="text-align:center;">
+16.9
+</td>
+<td style="text-align:center;">
+13.3
+</td>
+<td style="text-align:center;">
+8.5
+</td>
+<td style="text-align:center;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+办事员
+</td>
+<td style="text-align:center;">
+7.2
+</td>
+<td style="text-align:center;">
+13.0
+</td>
+<td style="text-align:center;">
+9.1
+</td>
+<td style="text-align:center;">
+8.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+服务人员
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+2.8
+</td>
+<td style="text-align:center;">
+4.3
+</td>
+<td style="text-align:center;">
+6.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+销售人员
+</td>
+<td style="text-align:center;">
+2.2
+</td>
+<td style="text-align:center;">
+9.4
+</td>
+<td style="text-align:center;">
+2.5
+</td>
+<td style="text-align:center;">
+2.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+农场主
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+0.3
+</td>
+<td style="text-align:center;">
+1.1
+</td>
+<td style="text-align:center;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+技术工人
+</td>
+<td style="text-align:center;">
+18.6
+</td>
+<td style="text-align:center;">
+18.8
+</td>
+<td style="text-align:center;">
+19.3
+</td>
+<td style="text-align:center;">
+8.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+半技术人员
+</td>
+<td style="text-align:center;">
+3.2
+</td>
+<td style="text-align:center;">
+7.6
+</td>
+<td style="text-align:center;">
+6.6
+</td>
+<td style="text-align:center;">
+9.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+非技术人员
+</td>
+<td style="text-align:center;">
+0.6
+</td>
+<td style="text-align:center;">
+2.6
+</td>
+<td style="text-align:center;">
+7.6
+</td>
+<td style="text-align:center;">
+6.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+农民
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+0.1
+</td>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+职业未知
+</td>
+<td style="text-align:center;">
+9.7
+</td>
+<td style="text-align:center;">
+6.2
+</td>
+<td style="text-align:center;">
+16.5
+</td>
+<td style="text-align:center;">
+20.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+失业者
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+1.7
+</td>
+<td style="text-align:center;">
+4.3
+</td>
+<td style="text-align:center;">
+16.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+合计
+</td>
+<td style="text-align:center;">
+99.1
+</td>
+<td style="text-align:center;">
+99.9
+</td>
+<td style="text-align:center;">
+100.0
+</td>
+<td style="text-align:center;">
+100.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;text-align:left">
+相对于白人的相异指数
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+20.5
+</td>
+<td style="text-align:center;">
+26.4
+</td>
+<td style="text-align:center;">
+46.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>从表中我们可以发现，其他种族具有与白人一样的教育分布时，成为专业人员的可能性在种族间的差异完全消失了。结论表明，在南非，受教育程度在解释种族之间的职业地位上还是有限的。</p>
+</div>
+<div id="4" class="section level1">
+<h1>实例4：中国城乡文化水平的差异</h1>
+<p>This example demonstrates how to do direct standardization where a mean is being standardized.</p>
+<p>实例数据来自1996年中国成年人口的抽样调查，<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>需要回应的问题是：农村人口和城镇人口在受教育程度上的差异是否能完全解释识字水平的平均差异。</p>
+<pre class="r"><code>chinatab &lt;- left_join(bfchina, afchina) %&gt;%
+        add_row(
+                sample = &quot;差异&quot;,
+                wordmean = max(bfchina$wordmean) - min(bfchina$wordmean),
+                adj = max(afchina$adj) - min(afchina$adj),
+                n = &quot;&quot;
+                )
+
+
+kable(chinatab[,c(1,2,4,3)],&quot;html&quot;,
+      col.names = c(&quot;&quot;,&quot;标准化前（%）&quot;,&quot;标准化后（%）&quot;,&quot;样本数&quot;),
+      align = &quot;c&quot;, digits = 1,
+      caption = &quot;中国1996年20~69岁城镇和农村人口的平均识字水平&quot;) %&gt;% 
+        column_spec(1, extra_css = &quot;text-align:left&quot;)</code></pre>
+<table>
+<caption>
+<span id="tab:chinatab">Table 17: </span>中国1996年20~69岁城镇和农村人口的平均识字水平
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+标准化前（%）
+</th>
+<th style="text-align:center;">
+标准化后（%）
+</th>
+<th style="text-align:center;">
+样本数
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;text-align:left">
+城镇人口
+</td>
+<td style="text-align:center;">
+4.8
+</td>
+<td style="text-align:center;">
+4.0
+</td>
+<td style="text-align:center;">
+3079
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+农村人口
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+3.4
+</td>
+<td style="text-align:center;">
+3002
+</td>
+</tr>
+<tr>
+<td style="text-align:center;text-align:left">
+差异
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+0.6
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>这个实例中，标准化的不是百分比而是均值，也就是正确识别中文词的平均值，我们以城镇人口的受教育水平为标准化指数，标准化后发现，城乡人口受教育程度的差异可以解释城乡人口在识字水平上差异的 66 %。</p>
+</div>
+<div class="section level1">
+<h1>总结</h1>
+<p>实例一是有关一个控制变量的直接标准化，实例二是两个控制变量的直接标准化，实例三是三个（多个）控制变量的直接标准化，实例四则是直接标准化对象是平均数的情况，四个实例皆围绕“直接标准化”，原实例重点在于 Stata 中的 <code>dstdize</code> 命令的使用，而在 R 中就是 <code>group_by</code> 的使用。因此，运用 R 进行“直接标准化”要理解 <code>group_by</code> 是怎么处理数据的。</p>
+<p>这几个实例主要运用了 <code>tidyverse</code> 包做数据处理，中间涉及重编码问题，可以使用 <code>sjlabelled</code> 包中的 <code>rec</code> 命令，有些是需要按条件处理的，可以用 <code>dplyr</code> 中的 <code>if_else</code> 处理单一条件编码，<code>case_when</code> 处理多个条件编码，但条件编码存在覆盖原数据的问题，处理中似乎会出现错误，暂时还没有找到流畅的处理方式。</p>
+<p>数据导入方面，实例三中的数据文件似乎版本过于老，用 <code>haven</code> 包的导入命令会出现错误，最后找到 <code>foreign</code> 包来导入数据，但无法保存数据中的 label ，需要手动添加，比较麻烦。以 <code>.raw</code> 为后缀的数据文件，可以使用 <code>haven</code> 里的 <code>read_table</code> 命令。</p>
+<p>使用 <code>knitr</code> 生成数据报告，在这个过程中处理起来并不是很流畅，主要是自己对代码还不是很熟练，所以有个“打草稿”的过程，最后还要修改下代码的呈现方式，比如把数据导入和处理作为一部分，表格呈现作为另一部分。</p>
+<p>实例的数据呈现主要是表格， <code>sjPlot</code> 包不仅提供了便捷的绘图功能，还提供了便捷的表格生成过程，唯一的缺陷就是输出样式和格式不够灵活，只能导出 html 格式，所以不能用于导出打印文本，也不是可以很灵活处理数据样式，比如表格标题，这跟 kintr 表格自动编号的功能就不匹配。 <code>kableExtra</code> 包是表格输出的另一个选择，不过首先要有数据框或 table 的数据形式，这个包也就是一种表格外包装的修饰功能，还是有些局限，比如我要组合表 <a href="#tab:bftab">15</a> 和表 <a href="#tab:aftab">16</a> ，我就不知道该如何操作 table 格式的数据了，先转为数据框？</p>
+<p>这个实例转换，让我理解了 <code>group_by</code> 的思维方式，就是数据在心中应该是 Rectangular Data 的形式，而不是最终的列联表形式。</p>
+<p>以上。</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Treiman, D. (2012). 量化数据分析. (任强, 译). 社会科学文献出版社.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>参见：<a href="http://bcs.wiley.com/he-bcs/Books?action=index&amp;itemId=0470380039&amp;bcsId=4667" class="uri">http://bcs.wiley.com/he-bcs/Books?action=index&amp;itemId=0470380039&amp;bcsId=4667</a><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Marx, G. T. (1967). Religion: Opiate or Inspiration of Civil Rights Militancy Among Negroes? American Sociological Review, 32(1), 64. <a href="https://doi.org/10.2307/2091719" class="uri">https://doi.org/10.2307/2091719</a><a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Treiman, D. J., Mckeever, M., &amp; Fodor, E. (1996). Racial differences in occupational status and income in South Africa, 1880 and 1881. Demography, 33(1), 111–132. <a href="https://doi.org/10.2307/2061717" class="uri">https://doi.org/10.2307/2061717</a><a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>数据来自20世纪90年代早期完成的南非经济机会和成就调查（Survey of Economic Opportunity and Achievement in South Africa）<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>Treiman, Donald J.; Szelenyi, Ivan; Walder, Andrew, 2016, “Life Histories and Social Change in Contemporary China, 1996 (M889V1)”, <a href="https://hdl.handle.net/1902.1/M889V1" class="uri">https://hdl.handle.net/1902.1/M889V1</a>, Harvard Dataverse, V1<a href="#fnref6">↩</a></p></li>
+</ol>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/r/">R</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=%e9%87%8f%e5%8c%96%e6%95%b0%e6%8d%ae%e5%88%86%e6%9e%90%28%e4%b8%80%29&url=https%3a%2f%2fcolin00.github.io%2fpost%2f2018%2f05%2f02%2f%25E9%2587%258F%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2588%2586%25E6%259E%2590%25E4%25B8%2580%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcolin00.github.io%2fpost%2f2018%2f05%2f02%2f%25E9%2587%258F%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2588%2586%25E6%259E%2590%25E4%25B8%2580%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fcolin00.github.io%2fpost%2f2018%2f05%2f02%2f%25E9%2587%258F%25E5%258C%2596%25E6%2595%25B0%25E6%258D%25AE%25E5%2588%2586%25E6%259E%2590%25E4%25B8%2580%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+    
+    
+    
+</footer>
+
+
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"><a href="/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">新的开始  &rarr;</a></span>
+</nav>
+
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="小站一会" href="https://colin00.github.io/">小站一会</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://colin00.github.io/js/jquery-1.11.3.min.js"></script>
+        <script src="https://colin00.github.io/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://colin00.github.io/js/highlight.js"></script>
+        
+        
+        <script src="https://colin00.github.io/js/scripts.js"></script>
+        
+        <script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    </body>
+</html>
+

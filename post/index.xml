@@ -6,17 +6,26 @@
     <description>Recent content in Posts on 小站一会</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 May 2018 21:32:20 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://colin00.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>量化数据分析(一)</title>
+      <link>https://colin00.github.io/post/2018/05/02/%E9%87%8F%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%80/</link>
+      <pubDate>Wed, 02 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://colin00.github.io/post/2018/05/02/%E9%87%8F%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B8%80/</guid>
+      <description>实例1：美国城市黑人中分激进类别与宗教信仰虔诚度的关系 实例2：对人类是从动物进化来的观点的认同 实例3：南非职业地位的种族差异 实例4：中国城乡</description>
+    </item>
+    
+    <item>
       <title>新的开始 </title>
-      <link>https://colin00.github.io/2018/05/01/2018-05-01-/</link>
+      <link>https://colin00.github.io/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
       <pubDate>Tue, 01 May 2018 21:32:20 +0800</pubDate>
       
-      <guid>https://colin00.github.io/2018/05/01/2018-05-01-/</guid>
+      <guid>https://colin00.github.io/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
       <description>新的开始</description>
     </item>
     
