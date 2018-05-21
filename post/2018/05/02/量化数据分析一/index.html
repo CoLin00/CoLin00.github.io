@@ -96,7 +96,7 @@
         
         </span>
         <span> · 
-                共 10131 字 需要 21 分钟</span>
+                共 10287 字 需要 21 分钟</span>
         
       
     </p>
@@ -789,6 +789,19 @@ directstd %&gt;%
 <p>对下面的每一个陈述，在方框中选择与您的观点最接近的选项。在您看来，下面这个观点有多正确？···人类起源于早期的动物种群。</p>
 </blockquote>
 <p>我们把这几年的数据合并，并去除数据中的缺失值，获得分年份和加总的频率比例表格，见表 <a href="#tab:gsstotal">7</a></p>
+<pre class="r"><code>gss_1994 &lt;- read_stata(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/gss/gss_1994.dta&quot;) 
+
+gss_2000 &lt;- read_stata(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/gss/gss_2000.dta&quot;)
+
+gss_1993 &lt;- read_stata(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/gss/gss_1993.dta&quot;)
+
+gss &lt;-  merge_df(gss_1993,gss_1994,gss_2000) %&gt;% 
+        select(year, scitest4, relig, denom, educ, age)%&gt;%
+        mutate(
+        scitest4_fc = as_label(scitest4, drop.na = T, drop.levels = T),
+        relig_fc = as_label(relig),
+        denom_fc = as_label(denom)
+        ) </code></pre>
 <pre class="r"><code>sjt.xtab(
         gss$scitest4_fc,
         gss$year,
@@ -2601,6 +2614,35 @@ afdiff &lt;- function(x) sum(abs(aftab[,1]-x))/2</code></pre>
 <h1>实例4：中国城乡文化水平的差异</h1>
 <p>This example demonstrates how to do direct standardization where a mean is being standardized.</p>
 <p>实例数据来自1996年中国成年人口的抽样调查，<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>需要回应的问题是：农村人口和城镇人口在受教育程度上的差异是否能完全解释识字水平的平均差异。</p>
+<pre class="r"><code>china &lt;- read_stata(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/china_data/china07.dta&quot;) %&gt;% 
+        select(sample, educ_hi, wordsum, weight) %&gt;% 
+        filter(sample!=3) %&gt;% 
+        mutate(
+                ed = rec(educ_hi,
+                         rec = &quot;1=1 [None]; 2:4=2 [Lower primary]; 5=3 [Upper primary]; 6=4 [Lower middle]; 7:8=5 [Upper middle]; 9:11=6 [Tertiary]; else=NA&quot;),
+                sample = as_label(rec(sample,
+                        rec = &quot;1=1[城镇人口]; 2=2[农村人口]&quot;
+                ))
+        ) %&gt;% 
+         filter(!is.na(ed))
+
+chinastd &lt;- read_table(&quot;/Users/admin/Documents/Study/Quantitative Data Analysis/Data_files/small_data_files/c_eddist.raw&quot;, col_names = c(&#39;ed&#39;,&#39;std_pop&#39;)) %&gt;%
+        mutate(
+                ed = as.double(ed)
+        )
+
+bfchina &lt;- china %&gt;% 
+        group_by(sample) %&gt;% 
+        summarise(wordmean=mean(wordsum),n=n())
+
+afchina &lt;- china %&gt;% 
+        group_by(ed,sample) %&gt;% 
+        summarise(n=mean(wordsum)) %&gt;% 
+        left_join(chinastd) %&gt;% 
+        mutate(product=n*std_pop) %&gt;%
+        ungroup() %&gt;% 
+        group_by(sample) %&gt;% 
+        summarise(adj=sum(product)) </code></pre>
 <pre class="r"><code>chinatab &lt;- left_join(bfchina, afchina) %&gt;%
         add_row(
                 sample = &quot;差异&quot;,
@@ -2748,7 +2790,7 @@ kable(chinatab[,c(1,2,4,3)],&quot;html&quot;,
 
 
 <nav class="post-nav">
-  <span class="nav-prev"></span>
+  <span class="nav-prev"><a href="/post/2018/05/15/%E9%87%8F%E5%8C%96%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%BA%8C/">&larr; 量化数据分析（二）</a></span>
   <span class="nav-next"><a href="/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">新的开始  &rarr;</a></span>
 </nav>
 
