@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>日志 on 小站一会</title>
-    <link>/tags/%E6%97%A5%E5%BF%97/</link>
+    <link>https://colin00.github.io/tags/%E6%97%A5%E5%BF%97/</link>
     <description>Recent content in 日志 on 小站一会</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 01 May 2018 21:32:20 +0800</lastBuildDate>
     
-	<atom:link href="/tags/%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://colin00.github.io/tags/%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>新的开始 </title>
-      <link>/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
+      <link>https://colin00.github.io/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
       <pubDate>Tue, 01 May 2018 21:32:20 +0800</pubDate>
       
-      <guid>/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
+      <guid>https://colin00.github.io/post/2018/05/01/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
       <description>新的开始</description>
     </item>
     
